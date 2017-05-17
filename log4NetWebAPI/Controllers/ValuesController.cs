@@ -1,39 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+using System.IO;
 using System.Web.Http;
+using log4net;
 
 namespace log4NetWebAPI.Controllers
 {
     public class ValuesController : ApiController
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(ValuesController));
+
         // GET api/<controller>
         public IEnumerable<string> Get()
         {
+            string file = Path.Combine("C:\\Logs\\", "WebAPILog_"+ Guid.NewGuid() + ".log");
+            Logger.ConfigureFileAppender(file);
+            Log.Info("Web API Started");
             return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<controller>/5
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<controller>
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/<controller>/5
-        public void Delete(int id)
-        {
         }
     }
 }
